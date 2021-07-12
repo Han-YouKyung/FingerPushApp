@@ -68,7 +68,9 @@ import android.content.Context;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,13 +89,15 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private Context context = this;
+    Fragment noticeFragment;
     Fragment tagFragment;
     Fragment infoFragment;
     Fragment targetFragment;
     Fragment guideFragment;
     Fragment settingFragment;
+    Fragment mainFragment;
     FragmentManager fragmentManager;
-
+    ImageButton homeBtn;
     TextView title;
 
     @Override
@@ -101,14 +105,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        noticeFragment = new NoticeFragment();
         tagFragment = new TagFragment();
         targetFragment = new TargetFragment();
         infoFragment = new InfoFragment();
         guideFragment = new GuideFragment();
         settingFragment = new SettingFragment();
+        mainFragment = new MainFragment();
         fragmentManager = getSupportFragmentManager();
 
-
+        homeBtn = (ImageButton) findViewById(R.id.homeBtn);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
       /*  ActionBar actionBar = getSupportActionBar();
@@ -116,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 만들기*/
         toolbar.setNavigationIcon(android.R.drawable.ic_menu_compass);
         //   actionBar.setHomeAsUpIndicator(android.R.drawable.arrow_up_float); //뒤로가기 버튼 이미지 지정
-
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -131,6 +137,23 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(android.R.drawable.arrow_up_float);
         */
 
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.main_container, mainFragment);
+        fragmentTransaction.commit();
+
+
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                title.setText("FINGER PUSH LIVE");
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.main_container, mainFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -144,7 +167,15 @@ public class MainActivity extends AppCompatActivity {
                 //  String title = menuItem.getTitle().toString();
                 title = (TextView) findViewById(R.id.tv_title);
 
-                if (id == R.id.item_tag) {
+                if (id == R.id.item_notice) {
+                    //태그 프래그먼트
+                    title.setText("태그");
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.replace(R.id.main_container, noticeFragment);
+                    fragmentTransaction.commit();
+
+                } else if (id == R.id.item_tag) {
                     //태그 프래그먼트
                     title.setText("태그");
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
