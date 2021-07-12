@@ -7,8 +7,12 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/mainFrag_text1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="#E9DBFA"
+        android:gravity="center"
+        android:text="가장 중요한 순간,\n여러분의 메시지가\n고객의 마음을 움직입니다."
+        android:textSize="20dp" />
 
 </FrameLayout>
