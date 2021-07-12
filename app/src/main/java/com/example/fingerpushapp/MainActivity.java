@@ -68,9 +68,7 @@ import android.content.Context;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
     Fragment guideFragment;
     Fragment settingFragment;
     FragmentManager fragmentManager;
-    ImageButton drawerBtn;
 
     TextView title;
 
@@ -111,14 +108,15 @@ public class MainActivity extends AppCompatActivity {
         settingFragment = new SettingFragment();
         fragmentManager = getSupportFragmentManager();
 
-        ImageButton drawerBtn = (ImageButton)findViewById(R.id.iv_menu);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
       /*  ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false); // 기존 title 지우기
         actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 만들기*/
-        //toolbar.setNavigationIcon(R.id.iv_menu);
+        toolbar.setNavigationIcon(android.R.drawable.ic_menu_compass);
         //   actionBar.setHomeAsUpIndicator(android.R.drawable.arrow_up_float); //뒤로가기 버튼 이미지 지정
+
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -133,12 +131,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(android.R.drawable.arrow_up_float);
         */
 
-        drawerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
