@@ -29,7 +29,7 @@
             android:background="#FFFFFF"
             android:ems="10"
             android:inputType="textPersonName"
-            android:padding="8dp"
+            android:padding="6dp"
             android:hint="식별자(identity) 설정" />
 
         <Button
@@ -52,6 +52,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:padding="8dp"
         android:text="식별자를 등록하세요."
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
