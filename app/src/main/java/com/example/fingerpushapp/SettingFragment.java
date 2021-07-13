@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +49,7 @@ public class SettingFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +59,44 @@ public class SettingFragment extends Fragment {
         }
     }
 
+    Switch setNoticeSwitch, adSwitch;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_setting, container, false);
+
+        setNoticeSwitch = (Switch) v.findViewById(R.id.settingSwitch1);
+        adSwitch = (Switch) v.findViewById(R.id.settingSwitch2);
+
+
+        setNoticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //알림 수신 설정 ON
+                    Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
+                } else {
+                    // 알림 수신 설정 OFF
+                    Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        adSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //알림 수신 설정 ON
+                    Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
+                } else {
+                    // 알림 수신 설정 OFF
+                    Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        return v;
     }
 }
