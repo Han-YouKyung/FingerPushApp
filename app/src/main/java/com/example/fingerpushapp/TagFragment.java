@@ -1,5 +1,6 @@
 package com.example.fingerpushapp;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.tabs.TabLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +26,7 @@ public class TagFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TabLayout tabLayout;
 
     public TagFragment() {
         // Required empty public constructor
@@ -48,6 +52,8 @@ public class TagFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+       // tabLayout = findView
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);

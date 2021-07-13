@@ -55,11 +55,13 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tag_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="모든 태그" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tag_my"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="내 태그" />
