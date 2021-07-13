@@ -83,7 +83,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.fingerpush.android.FingerPushManager;
+import com.fingerpush.android.NetworkUtility;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -99,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     ImageButton homeBtn;
     TextView title;
+    String appKey = "FIX0AIXR23CD";
+    String secretKey = "GVBx0fTXO9Dewctmj876wj9ifFc1cLmd";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +225,31 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+
+        FingerPushManager.setAppKey(appKey);
+        FingerPushManager.setAppSecret(secretKey);
+
+
+        FingerPushManager.getInstance(this).setDevice(new NetworkUtility.ObjectListener() {
+            @Override
+            public void onComplete(String code, String message, JSONObject jsonObject) {
+                if (code.equals("200") || code.equals("201")) {
+                    System.out.println("성공 : " + code + message);  // 디바이스 최초 등록시 해당 코드 리턴 후 태그 등록
+                }
+
+            }
+
+            @Override
+            public void onError(String code, String message) {
+                if (code.equals("504")) {
+                    // 디바이스가 이미 등록된 경우 해당 코드 리턴 후 태그 등록
+                }
+            }
+        });
+
+
     }
 
     @Override
