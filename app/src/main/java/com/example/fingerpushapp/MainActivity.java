@@ -171,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
 
                 int id = menuItem.getItemId();
-                //  String title = menuItem.getTitle().toString();
                 title = (TextView) findViewById(R.id.tv_title);
 
                 if (id == R.id.item_notice) {

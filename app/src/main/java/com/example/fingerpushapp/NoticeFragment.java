@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,9 +23,11 @@ public class NoticeFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public NoticeFragment() {
         // Required empty public constructor
@@ -48,6 +53,8 @@ public class NoticeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -55,10 +62,32 @@ public class NoticeFragment extends Fragment {
         }
     }
 
+    Switch noticeSwitch;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notice, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_notice, container, false);
+
+        noticeSwitch = (Switch) v.findViewById(R.id.switch1);
+
+        noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    //알림 수신 설정 ON
+                    Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // 알림 수신 설정 OFF
+                    Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        return v;
     }
 }
