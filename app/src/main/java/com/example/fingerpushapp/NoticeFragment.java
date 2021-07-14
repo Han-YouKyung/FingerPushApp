@@ -12,6 +12,16 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.fingerpush.android.FingerPushManager;
+import com.fingerpush.android.NetworkUtility;
+import com.fingerpush.android.dataset.TagList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link NoticeFragment#newInstance} factory method to
@@ -81,12 +91,42 @@ public class NoticeFragment extends Fragment {
         noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     //알림 수신 설정 ON
                     recyclerView.setVisibility(View.INVISIBLE);
                     Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                    FingerPushManager.getInstance(getContext()).getAllTag(
+                            new NetworkUtility.ObjectListener() { // 비동기 이벤트 리스너
+
+                                @Override
+                                public void onError(String code, String message) {
+                                    System.out.println("오류");
+                                }
+
+                                @Override
+                                public void onComplete(String code, String message, JSONObject data) {
+                                    try {
+                                        JSONArray ArrayData = data.getJSONArray(TagList.TAGLIST);
+                                        if (ArrayData.length() > 0) {
+                                            ArrayList<TagList> dataList = new ArrayList<>();
+                                            TagList list = null;
+                                            for (int i = 0; i < ArrayData.length(); i++) {
+                                                list = new TagList();
+                                                list.date = ArrayData.getJSONObject(i).optString("date");
+                                                list.tag = ArrayData.getJSONObject(i).optString("tag");
+                                                dataList.add(list);
+                                                System.out.println(list); // 메세지 잘 받아짐
+                                            }
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            }
+                    );
+
+                } else {
                     // 알림 수신 설정 OFF
                     recyclerView.setVisibility(View.INVISIBLE);
                     Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();

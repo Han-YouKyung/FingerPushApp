@@ -113,9 +113,8 @@ public class IntentService extends FingerPushFcmListener {
 
         mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
 
-        System.out.println(deTitle);
-
-        System.out.println(deMessage);
+        //System.out.println(deTitle);
+        //System.out.println(deMessage);
         //   mBuilder.setContentIntent(pi);
 
 
