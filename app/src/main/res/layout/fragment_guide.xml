@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EDEDED"
     tools:context=".GuideFragment">
 
 
@@ -12,6 +11,7 @@
         android:id="@+id/linearLayout4"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#EDEDED"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,9 +22,10 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             android:padding="10dp"
             android:text="라이브앱\n '핑거푸시 라이브'를 통해 푸시 알림을 직접 발송해 보고, 앱에서 수신된 푸시 알림을 확인하실 수 있습니다."
+            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="20dp" />
 
         <TextView
@@ -33,11 +34,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:autoLink="web"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             android:padding="10dp"
             android:text="라이브 앱 이용 안내\n 1 핑거푸시 홈페이지에서 라이브 계정으로 로그인\n* URL : www.fingerpush.com"
+            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="20dp" />
-    </LinearLayout><![CDATA[
+    </LinearLayout>
+    <![CDATA[
 
     />
 ]]>

@@ -24,6 +24,10 @@ public class InfoFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    //getAppReport 사용
+
+
+
     public InfoFragment() {
         // Required empty public constructor
     }

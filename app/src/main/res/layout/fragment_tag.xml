@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"
-        android:background="#EAE9E9"
+        android:background="?attr/colorButtonNormal"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,11 +27,12 @@
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
 
-            android:background="#FFFFFF"
+            android:background="@color/white"
             android:ems="10"
+            android:hint="태그 설정"
             android:inputType="textPersonName"
             android:padding="8dp"
-            android:hint="태그 설정" />
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/button"

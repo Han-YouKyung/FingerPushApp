@@ -3,6 +3,7 @@ package com.example.fingerpushapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,7 @@ public class NoticeFragment extends Fragment {
     }
 
     Switch noticeSwitch;
+    RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,16 +74,21 @@ public class NoticeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_notice, container, false);
 
         noticeSwitch = (Switch) v.findViewById(R.id.switch1);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView2);
+
+        recyclerView.setVisibility(View.INVISIBLE);
 
         noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     //알림 수신 설정 ON
+                    recyclerView.setVisibility(View.INVISIBLE);
                     Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     // 알림 수신 설정 OFF
+                    recyclerView.setVisibility(View.INVISIBLE);
                     Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
                 }
             }

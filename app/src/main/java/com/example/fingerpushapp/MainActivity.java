@@ -150,18 +150,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
-        homeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                title.setText("FINGER PUSH LIVE");
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.replace(R.id.main_container, mainFragment);
-                fragmentTransaction.commit();
-            }
-        });
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -221,10 +209,22 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction.commit();
                 }
 
+                homeBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        title.setText("FINGER PUSH LIVE");
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.replace(R.id.main_container, mainFragment);
+                        fragmentTransaction.commit();
+
+                    }
+                });
+
                 return true;
             }
         });
-
 
 
         FingerPushManager.setAppKey(appKey);
