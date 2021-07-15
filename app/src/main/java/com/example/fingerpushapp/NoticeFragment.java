@@ -61,6 +61,7 @@ public class NoticeFragment extends Fragment {
         FingerPushManager.getInstance(getContext()).getDeviceInfo(
                 new NetworkUtility.ObjectListener() { // 비동기 이벤트 리스너
 
+
                     @Override
                     public void onError(String code, String message) {
 
@@ -68,26 +69,22 @@ public class NoticeFragment extends Fragment {
 
                     @Override
                     public void onComplete(String code, String message, JSONObject ObjectData) {
-                       /* String appkey = ObjectData.optString(DeviceInfo.APPKEY);
-                        String device_type = ObjectData.optString(DeviceInfo.DEVICE_TYPE);
+
                         String activity = ObjectData.optString(DeviceInfo.ACTIVITY);
-                       // activity : 푸시 수신 활성화 상태(A : 활성화, D : 비활성화)
-                   //      ad_activity : 광고 푸시 수신 활성화 상태(A : 활성화, D : 비활성화)
-                        String ad_activity = ObjectData.optString(DeviceInfo.AD_ACTIVITY);
-                        String identity = ObjectData.optString(DeviceInfo.IDENTITY);
-                        String timezone = ObjectData.optString(DeviceInfo.TIMEZONE);
-                        String country = ObjectData.optString(DeviceInfo.COUNTRY);
-                        String version_code = ObjectData.optString(DeviceInfo.VERCODE);
-                        String version_name = ObjectData.optString(DeviceInfo.VERNAME);
-                        String os_version = ObjectData.optString(DeviceInfo.OSVER);*/
+                        System.out.println(activity);
+
+                        if (activity.equals("A")) {
+                            noticeSwitch.setChecked(true);
+                        } else {
+                            noticeSwitch.setChecked(false);
+                        }
+
 
                         noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                if (isChecked/* && activity.equals("A")*/) { // activity 불러내지 않아도 설정 입력 됨! (설정 저장 아직)
-
+                                if (isChecked) {
                                     Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
-
                                     FingerPushManager.getInstance(getContext()).setPushEnable(
                                             true, // 푸시 활성화 여부 (true : 활성화, false : 비활성화)
                                             new NetworkUtility.ObjectListener() {
@@ -103,7 +100,7 @@ public class NoticeFragment extends Fragment {
                                             }); // 비동기 이벤트 리스너
                                 } else {
                                     Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
-
+                                    noticeSwitch.setOnCheckedChangeListener(this);
                                     FingerPushManager.getInstance(getContext()).setPushEnable(
                                             false, // 푸시 활성화 여부 (true : 활성화, false : 비활성화)
                                             new NetworkUtility.ObjectListener() {
@@ -117,14 +114,17 @@ public class NoticeFragment extends Fragment {
 
                                                 }
                                             });// 비동기 이벤트 리스너
+
                                 }
                             }
                         });
 
                     }
+                    //}
 
                 }
         );
+
 
 
         return v;
