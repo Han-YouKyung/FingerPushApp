@@ -131,8 +131,8 @@ public class NoticeFragment extends Fragment {
     }
 }
 
-/*
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.Holder> {
+
+/*public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.Holder> {
 
     Context context;
     ArrayList<TagList> dataList = new ArrayList<>();
