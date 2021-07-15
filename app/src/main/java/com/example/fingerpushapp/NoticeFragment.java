@@ -1,8 +1,11 @@
 package com.example.fingerpushapp;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.fingerpush.android.FingerPushManager;
 import com.fingerpush.android.NetworkUtility;
+import com.fingerpush.android.dataset.DeviceInfo;
 import com.fingerpush.android.dataset.TagList;
 
 import org.json.JSONArray;
@@ -21,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,49 +34,13 @@ import java.util.ArrayList;
  */
 public class NoticeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
-    public NoticeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NoticeFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static NoticeFragment newInstance(String param1, String param2) {
         NoticeFragment fragment = new NoticeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     Switch noticeSwitch;
     RecyclerView recyclerView;
@@ -88,53 +57,107 @@ public class NoticeFragment extends Fragment {
 
         recyclerView.setVisibility(View.INVISIBLE);
 
-        noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    //알림 수신 설정 ON
-                    recyclerView.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
-                    FingerPushManager.getInstance(getContext()).getAllTag(
-                            new NetworkUtility.ObjectListener() { // 비동기 이벤트 리스너
 
-                                @Override
-                                public void onError(String code, String message) {
-                                    System.out.println("오류");
+        FingerPushManager.getInstance(getContext()).getDeviceInfo(
+                new NetworkUtility.ObjectListener() { // 비동기 이벤트 리스너
+
+                    @Override
+                    public void onError(String code, String message) {
+
+                    }
+
+                    @Override
+                    public void onComplete(String code, String message, JSONObject ObjectData) {
+                       /* String appkey = ObjectData.optString(DeviceInfo.APPKEY);
+                        String device_type = ObjectData.optString(DeviceInfo.DEVICE_TYPE);
+                        String activity = ObjectData.optString(DeviceInfo.ACTIVITY);
+                       // activity : 푸시 수신 활성화 상태(A : 활성화, D : 비활성화)
+                   //      ad_activity : 광고 푸시 수신 활성화 상태(A : 활성화, D : 비활성화)
+                        String ad_activity = ObjectData.optString(DeviceInfo.AD_ACTIVITY);
+                        String identity = ObjectData.optString(DeviceInfo.IDENTITY);
+                        String timezone = ObjectData.optString(DeviceInfo.TIMEZONE);
+                        String country = ObjectData.optString(DeviceInfo.COUNTRY);
+                        String version_code = ObjectData.optString(DeviceInfo.VERCODE);
+                        String version_name = ObjectData.optString(DeviceInfo.VERNAME);
+                        String os_version = ObjectData.optString(DeviceInfo.OSVER);*/
+
+                        noticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked/* && activity.equals("A")*/) { // activity 불러내지 않아도 설정 입력 됨! (설정 저장 아직)
+
+                                    Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
+
+                                    FingerPushManager.getInstance(getContext()).setPushEnable(
+                                            true, // 푸시 활성화 여부 (true : 활성화, false : 비활성화)
+                                            new NetworkUtility.ObjectListener() {
+                                                @Override
+                                                public void onComplete(String s, String s1, JSONObject jsonObject) {
+
+                                                }
+
+                                                @Override
+                                                public void onError(String s, String s1) {
+
+                                                }
+                                            }); // 비동기 이벤트 리스너
+                                } else {
+                                    Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
+
+                                    FingerPushManager.getInstance(getContext()).setPushEnable(
+                                            false, // 푸시 활성화 여부 (true : 활성화, false : 비활성화)
+                                            new NetworkUtility.ObjectListener() {
+                                                @Override
+                                                public void onComplete(String s, String s1, JSONObject jsonObject) {
+
+                                                }
+
+                                                @Override
+                                                public void onError(String s, String s1) {
+
+                                                }
+                                            });// 비동기 이벤트 리스너
                                 }
-
-                                @Override
-                                public void onComplete(String code, String message, JSONObject data) {
-                                    try {
-                                        JSONArray ArrayData = data.getJSONArray(TagList.TAGLIST);
-                                        if (ArrayData.length() > 0) {
-                                            ArrayList<TagList> dataList = new ArrayList<>();
-                                            TagList list = null;
-                                            for (int i = 0; i < ArrayData.length(); i++) {
-                                                list = new TagList();
-                                                list.date = ArrayData.getJSONObject(i).optString("date");
-                                                list.tag = ArrayData.getJSONObject(i).optString("tag");
-                                                dataList.add(list);
-                                                System.out.println(list); // 메세지 잘 받아짐
-                                            }
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
                             }
-                    );
+                        });
 
-                } else {
-                    // 알림 수신 설정 OFF
-                    recyclerView.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
-            }
-        });
+        );
 
 
         return v;
     }
 }
+
+/*
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.Holder> {
+
+    Context context;
+    ArrayList<TagList> dataList = new ArrayList<>();
+
+    public RecyclerViewAdapter(Context context, ArrayList<TagList> dataList) {
+        this.context = context;
+        this.dataList = dataList;
+    }
+
+
+    @Override
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_notice, parent, false);
+        Holder holder = new Holder(view);
+
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerViewAdapter.Holder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+}*/

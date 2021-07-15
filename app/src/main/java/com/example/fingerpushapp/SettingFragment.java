@@ -11,6 +11,12 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.fingerpush.android.FingerPushManager;
+import com.fingerpush.android.NetworkUtility;
+import com.fingerpush.android.dataset.DeviceInfo;
+
+import org.json.JSONObject;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SettingFragment#newInstance} factory method to
@@ -72,31 +78,136 @@ public class SettingFragment extends Fragment {
         adSwitch = (Switch) v.findViewById(R.id.settingSwitch2);
 
 
-        setNoticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    //알림 수신 설정 ON
-                    Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
-                } else {
-                    // 알림 수신 설정 OFF
-                    Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        FingerPushManager.getInstance(getContext()).getDeviceInfo(
+                new NetworkUtility.ObjectListener() { // 비동기 이벤트 리스너
 
-        adSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    //알림 수신 설정 ON
-                    Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
-                } else {
-                    // 알림 수신 설정 OFF
-                    Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onError(String code, String message) {
+
+                    }
+
+                    @Override
+                    public void onComplete(String code, String message, JSONObject ObjectData) {
+                        String appkey = ObjectData.optString(DeviceInfo.APPKEY);
+                        String device_type = ObjectData.optString(DeviceInfo.DEVICE_TYPE);
+                        String activity = ObjectData.optString(DeviceInfo.ACTIVITY);
+                        String ad_activity = ObjectData.optString(DeviceInfo.AD_ACTIVITY);
+                        String identity = ObjectData.optString(DeviceInfo.IDENTITY);
+                        String timezone = ObjectData.optString(DeviceInfo.TIMEZONE);
+                        String country = ObjectData.optString(DeviceInfo.COUNTRY);
+                        String version_code = ObjectData.optString(DeviceInfo.VERCODE);
+                        String version_name = ObjectData.optString(DeviceInfo.VERNAME);
+                        String os_version = ObjectData.optString(DeviceInfo.OSVER);
+
+                        setNoticeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked) {
+                                    Toast.makeText(getContext(), "알림설정 ON", Toast.LENGTH_SHORT).show();
+                                    FingerPushManager.getInstance(getContext()).setPushEnable(
+                                            true, // 푸시 활성화 여부 (true : 활성화, false : 비활성화)
+                                            new NetworkUtility.ObjectListener() {
+                                                @Override
+                                                public void onComplete(String s, String s1, JSONObject jsonObject) {
+
+                                                }
+
+                                                @Override
+                                                public void onError(String s, String s1) {
+
+                                                }
+                                            }); // 비동기 이벤트 리스너
+                                } else {
+                                    Toast.makeText(getContext(), "알림설정 OFF", Toast.LENGTH_SHORT).show();
+
+                                    FingerPushManager.getInstance(getContext()).setPushEnable(
+                                            false, // 푸시 활성화 여부 (true : 활성화, false : 비활성화)
+                                            new NetworkUtility.ObjectListener() {
+                                                @Override
+                                                public void onComplete(String s, String s1, JSONObject jsonObject) {
+
+                                                }
+
+                                                @Override
+                                                public void onError(String s, String s1) {
+
+                                                }
+                                            });// 비동기 이벤트 리스너
+                                }
+                            }
+                        });
+
+                    }
+
                 }
-            }
-        });
+        );
+
+
+        FingerPushManager.getInstance(getContext()).getDeviceInfo(
+                new NetworkUtility.ObjectListener() { // 비동기 이벤트 리스너
+
+                    @Override
+                    public void onError(String code, String message) {
+
+                    }
+
+                    @Override
+                    public void onComplete(String code, String message, JSONObject ObjectData) {
+                        String appkey = ObjectData.optString(DeviceInfo.APPKEY);
+                        String device_type = ObjectData.optString(DeviceInfo.DEVICE_TYPE);
+                        String activity = ObjectData.optString(DeviceInfo.ACTIVITY);
+                        String ad_activity = ObjectData.optString(DeviceInfo.AD_ACTIVITY);
+                        String identity = ObjectData.optString(DeviceInfo.IDENTITY);
+                        String timezone = ObjectData.optString(DeviceInfo.TIMEZONE);
+                        String country = ObjectData.optString(DeviceInfo.COUNTRY);
+                        String version_code = ObjectData.optString(DeviceInfo.VERCODE);
+                        String version_name = ObjectData.optString(DeviceInfo.VERNAME);
+                        String os_version = ObjectData.optString(DeviceInfo.OSVER);
+
+                        adSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked) {
+                                    Toast.makeText(getContext(), "광고 알림설정 ON", Toast.LENGTH_SHORT).show();
+                                    FingerPushManager.getInstance(getContext()).setAdvertisePushEnable(
+                                            true, // 푸시 활성화 여부 (true : 활성화, false : 비활성화)
+                                            new NetworkUtility.ObjectListener() {
+                                                @Override
+                                                public void onComplete(String s, String s1, JSONObject jsonObject) {
+
+                                                }
+
+                                                @Override
+                                                public void onError(String s, String s1) {
+
+                                                }
+                                            }); // 비동기 이벤트 리스너
+                                } else {
+                                    Toast.makeText(getContext(), "광고 알림설정 OFF", Toast.LENGTH_SHORT).show();
+
+                                    FingerPushManager.getInstance(getContext()).setAdvertisePushEnable(
+                                            false, // 푸시 활성화 여부 (true : 활성화, false : 비활성화)
+                                            new NetworkUtility.ObjectListener() {
+                                                @Override
+                                                public void onComplete(String s, String s1, JSONObject jsonObject) {
+
+                                                }
+
+                                                @Override
+                                                public void onError(String s, String s1) {
+
+                                                }
+                                            });// 비동기 이벤트 리스너
+                                }
+                            }
+                        });
+
+
+                    }
+
+                }
+        );
+
         return v;
     }
 }
