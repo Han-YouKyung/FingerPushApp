@@ -81,9 +81,9 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-      /*  View v = inflater.inflate(R.layout.fragment_info, container, false);
+      View v = inflater.inflate(R.layout.fragment_info, container, false);
         recyclerView = v.findViewById(R.id.recyclerView2);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+       /*   LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ArrayList<LauncherActivity.ListItem> list = new ArrayList<>();
         infoRecyclerAdapter = new InfoRecyclerAdapter(list);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -139,8 +139,8 @@ public class InfoFragment extends Fragment {
 
                         // recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView3);
 
-                        infoRecyclerAdapter = new InfoRecyclerAdapter(list);
-                        recyclerView.setAdapter(infoRecyclerAdapter);
+                     /*   infoRecyclerAdapter = new InfoRecyclerAdapter(list);
+                        recyclerView.setAdapter(infoRecyclerAdapter);*/
 
 
                     }
