@@ -38,7 +38,7 @@ public class InfoFragment extends Fragment {
     private String mParam2;
     InfoRecyclerAdapter infoRecyclerAdapter;
     RecyclerView recyclerView;
-    ArrayList<InfoItem> list;
+    ArrayList<InfoItem> list = new ArrayList<>();
     TextView title;
     TextView content;
 
@@ -81,10 +81,15 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-      View v = inflater.inflate(R.layout.fragment_info, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_info, container, false);
         recyclerView = v.findViewById(R.id.recyclerView2);
        /*   LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ArrayList<LauncherActivity.ListItem> list = new ArrayList<>();
+        infoRecyclerAdapter = new InfoRecyclerAdapter(list);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(infoRecyclerAdapter);*/
+      /*  LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         infoRecyclerAdapter = new InfoRecyclerAdapter(list);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(infoRecyclerAdapter);*/
@@ -112,36 +117,17 @@ public class InfoFragment extends Fragment {
                         String BeUpdateLink = data.optString("beupdalert_a");
                         String UpdateDate = data.optString("ver_update_date_a");
 
-                        //ArrayList<data>
-                        //title.setText(list.get(position));
 
-                        View v = inflater.inflate(R.layout.fragment_info, container, false);
-                       /* title = v.findViewById(R.id.textView5);
-                        content = v.findViewById(R.id.textView6);*/
-                        //  InfoItem item = list.get(position);
-                        //ArrayList<data>
-                        //title.setText(list.get(position));
 
-                     /*   System.out.println(AppKey);
-                        System.out.println(AppName);*/
-                       // View view = inflater.inflate(R.layout.info_recycler, container, false);
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                        infoRecyclerAdapter = new InfoRecyclerAdapter(list);
-                        recyclerView.setLayoutManager(linearLayoutManager);
+
+                        list.add(new InfoItem("appid", AppKey));
+                        list.add(new InfoItem("app_name", AppName));
+
+                        //System.out.println(list);
+                        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                        infoRecyclerAdapter = new InfoRecyclerAdapter(list);*/
+                        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
                         recyclerView.setAdapter(infoRecyclerAdapter);
-
-
-                      /*  title.setText(AppKey);
-                        content.setText(AppName);*/
-
-//                        recyclerView.setLayoutManager(linearLayoutManager);
-
-
-                        // recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView3);
-
-                     /*   infoRecyclerAdapter = new InfoRecyclerAdapter(list);
-                        recyclerView.setAdapter(infoRecyclerAdapter);*/
-
 
                     }
 
@@ -149,7 +135,7 @@ public class InfoFragment extends Fragment {
         );
 
 
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        return v;
     }
 }
 
