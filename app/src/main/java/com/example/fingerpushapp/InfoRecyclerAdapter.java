@@ -22,7 +22,7 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
     public ArrayList<InfoItem> list = new ArrayList<>();
 
 
-    public InfoRecyclerAdapter(ArrayList<InfoItem> list) {
+    public InfoRecyclerAdapter(Context context, ArrayList<InfoItem> list) {
         this.list = list;
     }
 
@@ -55,10 +55,8 @@ public class InfoRecyclerAdapter extends RecyclerView.Adapter<InfoRecyclerAdapte
 
     @Override
     public void onBindViewHolder(InfoRecyclerAdapter.MyViewHolder holder, int position) {
-        holder.title.setText(list.get(position).getAppKey());
-        holder.content.setText(list.get(position).getAppName());
-        System.out.println("타이틀" + holder.title);
-        System.out.println("내용" + holder.content);
+        holder.title.setText(list.get(position).getAppName());
+        holder.content.setText(list.get(position).getAppValue());
 
     }
 

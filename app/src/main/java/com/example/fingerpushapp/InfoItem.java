@@ -2,27 +2,27 @@ package com.example.fingerpushapp;
 
 public class InfoItem {
 
-    String AppKey;
     String AppName;
+    String AppValue;
 
-    public InfoItem(String AppKey, String AppName) {
-        this.AppKey = AppKey;
+    public InfoItem(String AppName, String AppValue) {
         this.AppName = AppName;
-    }
-
-    public String getAppKey() {
-        return AppKey;
-    }
-
-    public void setAppKey(String appKey) {
-        AppKey = appKey;
+        this.AppValue = AppValue;
     }
 
     public String getAppName() {
         return AppName;
     }
 
-    public void setAppName(String appName) {
-        AppName = appName;
+    public void setAppName(String AppName) {
+        AppName = AppName;
+    }
+
+    public String getAppValue() {
+        return AppValue;
+    }
+
+    public void getAppValue(String AppValue) {
+        AppValue = AppValue;
     }
 }

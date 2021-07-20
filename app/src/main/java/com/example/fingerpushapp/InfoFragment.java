@@ -39,8 +39,6 @@ public class InfoFragment extends Fragment {
     InfoRecyclerAdapter infoRecyclerAdapter;
     RecyclerView recyclerView;
     ArrayList<InfoItem> list = new ArrayList<>();
-    TextView title;
-    TextView content;
 
     //getAppReport 사용
 
@@ -83,7 +81,7 @@ public class InfoFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_info, container, false);
-        recyclerView = v.findViewById(R.id.recyclerView2);
+        recyclerView = v.findViewById(R.id.recyclerView3);
        /*   LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ArrayList<LauncherActivity.ListItem> list = new ArrayList<>();
         infoRecyclerAdapter = new InfoRecyclerAdapter(list);
@@ -110,6 +108,7 @@ public class InfoFragment extends Fragment {
                         String Icon = data.optString("icon");
                         String Category = data.optString("category");
                         String Environments = data.optString("environments");
+                        String BeiOS = data.optString("beios");
                         String BeAndroid = data.optString("beandroid");
                         String VersionName = data.optString("android_version");
                         int VersionCode = data.optInt("android_int_version");
@@ -118,17 +117,25 @@ public class InfoFragment extends Fragment {
                         String UpdateDate = data.optString("ver_update_date_a");
 
 
+                        list.add(new InfoItem("App Key", AppKey));
+                        list.add(new InfoItem("App Name", AppName));
+                        list.add(new InfoItem("User ID", User_Id));
+                        list.add(new InfoItem("Icon", Icon));
+                        list.add(new InfoItem("Category", Category));
+                        list.add(new InfoItem("Environment", Environments));
+                        list.add(new InfoItem("Be iOS", BeiOS));
+                        list.add(new InfoItem("Be Android", BeAndroid));
+                        list.add(new InfoItem("Version", VersionName));
+                        list.add(new InfoItem("Android Update Link", BeUpdateLink));
+                        list.add(new InfoItem("Version Update Date", UpdateDate));
 
 
-                        list.add(new InfoItem("appid", AppKey));
-                        list.add(new InfoItem("app_name", AppName));
 
-                        //System.out.println(list);
-                        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                        infoRecyclerAdapter = new InfoRecyclerAdapter(list);*/
+                        //list.add(new InfoItem())
+
+                        infoRecyclerAdapter = new InfoRecyclerAdapter(v.getContext(), list);
                         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
                         recyclerView.setAdapter(infoRecyclerAdapter);
-
                     }
 
                 }
